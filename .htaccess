@@ -1,0 +1,5 @@
+RewriteEngine On
+# Provide Specific Index Page (Set the default handler)
+DirectoryIndex index.php
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule . /bootstrap.php [L]
