@@ -1,5 +1,5 @@
 
-<?php include '../views/header.php'; ?>
+<?php include 'views/header.php'; ?>
 <?php
 $msg = "";
 	// This is the page the user arrives at to set new password
