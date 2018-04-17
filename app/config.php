@@ -3,7 +3,7 @@
   class Config
   {
     private $host = "us-cdbr-iron-east-05.cleardb.net";    //
-    private $db_name = "php_user_sys";   // Database access credentials - change
+    private $db_name = "heroku_33bfe82ec8da9b8";   // Database access credentials - change
     private $db_username = "b29f2f0fd1f9b8";     //
     private $db_password = "1830114a";
     private $secret_key = "OepxL2YvgC747SSsT2"; 		//Generate your own key string from https://www.random.org/strings/
