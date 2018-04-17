@@ -2,18 +2,18 @@
 
   class Config
   {
-    private $host = "localhost";    //
+    private $host = "us-cdbr-iron-east-05.cleardb.net";    //
     private $db_name = "php_user_sys";   // Database access credentials - change
-    private $db_username = "root";     //
-    private $db_password = "Maiterios851";
+    private $db_username = "b29f2f0fd1f9b8";     //
+    private $db_password = "1830114a";
     private $secret_key = "OepxL2YvgC747SSsT2"; 		//Generate your own key string from https://www.random.org/strings/
-    private $server_name = "PHP-User-Registration";		// Change to your domain name
+    private $server_name = "php-registrtion-system.herokuapp.com";		// Change to your domain name
     private $mail_host = "smtp.mailgun.org";            // Change to your stmp service
     private $mail_username = "postmaster@sandboxd3612106dbc141b7a5134f0fddce769a.mailgun.org";  //Change to mailgun username
     private $mail_password = "12345";
     private $from_email = "kalimas158@gmail.com";
     private $reply_email = "kalimas158@gmail.com";
-    private $domain = "http://localhost/php-repos/registration";    //Your domain without baclslash
+    private $domain = "https://php-registrtion-system.herokuapp.com";    //Your domain without baclslash
 
     //GETTERS
     public function get_host(){
