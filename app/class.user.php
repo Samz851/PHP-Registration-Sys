@@ -2,6 +2,7 @@
 
 require_once 'dbconfig.php';
 require_once 'vendor/autoload.php';
+require_once 'config.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Lcobucci\JWT\Builder;
@@ -11,20 +12,21 @@ use Lcobucci\JWT\ValidationData;
 
 class USER
 {	
-	public $server_name = "PHP-User-Registration";		// Change to your domain name
 	private $conn;
-	//secret for jwt signature
-	private $secret_key = "OepxL2YvgC747SSsT2"; 		//Generate your own key string from https://www.random.org/strings/
+	private $config;
+	public $url;
+	private $secret_key;
 
-	
 	public function __construct()
 	{
+		$this->config = new Config();
 		$database = new Database();
 		$db = $database->dbConnection();
 		$this->conn = $db;
 		$this->signer = new Sha256();
+		$this->url = $this->config->get_domain();
+		$this->secret_key = $this->config->get_secret_key();
     }
-	
 	public function runQuery($sql)
 	{
 		$stmt = $this->conn->prepare($sql);
@@ -35,17 +37,11 @@ class USER
 		$client  = @$_SERVER['HTTP_CLIENT_IP'];
     	$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
     	$remote  = $_SERVER['REMOTE_ADDR'];
-    	if(filter_var($client, FILTER_VALIDATE_IP))
-    	{
-        	$ip = $client;
-    	}
-    	elseif (filter_var($forward, FILTER_VALIDATE_IP))
-    	{
-        	$ip = $forward;
-    	} else
-    	{
-        	$ip = $remote;
-    	}
+    	if(filter_var($client, FILTER_VALIDATE_IP)) {
+			$ip = $client;
+    	} elseif (filter_var($forward, FILTER_VALIDATE_IP)) {
+			$ip = $forward; 
+		} else {$ip = $remote;}
 		return $ip;		// on localhost this should return by default on windows IPv6 format (::1) or the IPv4 (127.0.0.1);
 	}
 
@@ -173,7 +169,7 @@ class USER
 					<br /><br />
 					Click the following link to reset your password 
 					<br /><br />
-					<a href='http://localhost/php-repos/registration/views/resetpass.php?reset&id=$code&token=$token'>click here to reset your password</a>
+					<a href='$this->url/views/resetpass.php?reset&id=$code&token=$token'>click here to reset your password</a>
 					<br /><br />
 					thank you :)
 					";
@@ -212,12 +208,12 @@ class USER
 		// $mail->SMTPDebug  = 4;                     	// uncomment to enable detailed debuging
 		$mail->SMTPAuth   = true;                  		//
 		$mail->SMTPSecure = "tls";                 		// Set mailer configuration to your Mail service
-		$mail->Host       = "smtp.mailgun.org";      	//           			//
+		$mail->Host       = $this->config->get_mail_host();      						// From Config
 		$mail->addAddress($uemail);
-		$mail->Username="postmaster@sandboxd3612106dbc141b7a5134f0fddce769a.mailgun.org";  
-		$mail->Password="12345";            
-		$mail->From ='sam.otb@hotmail.ca';
-		$mail->AddReplyTo("sam.otb@hotmail.ca");
+		$mail->Username	  =$this->config->get_mail_username();  							// From Config
+		$mail->Password	  =$this->config->get_mail_password();    							// From Config        
+		$mail->From 	  =$this->config->get_from_email();								// From Config
+		$mail->AddReplyTo($this->config->get_reply_email());							// From Config
 		$mail->Subject    = $subject;
 		$mail->Body = $message;
 		$mail->Send();

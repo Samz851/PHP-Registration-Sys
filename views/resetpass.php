@@ -1,5 +1,5 @@
 
-<?php include 'views/header.php'; ?>
+<?php include 'header.php'; ?>
 <?php
 $msg = "";
 	// This is the page the user arrives at to set new password
@@ -57,7 +57,7 @@ if(isset($_GET['reset'])){
 						<label for="email" class="cols-sm-2 control-label">Enter a new password</label>
 						<div class="cols-sm-10">
 							<div class="input-group">
-								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+								<span class="input-group-addon"><i class="fa-lock fa-lg fa" aria-hidden="true"></i></span>
 								<input type="password" class="form-control" name="new_password" placeholder="Enter password"/>
 								<input type="password" class="form-control" name="confirm" placeholder="Re-enter password"/>
 							</div>
